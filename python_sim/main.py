@@ -5,6 +5,12 @@
 
 import random
 from environment import Environment
+import logger_setup
+
+# Diese Zeile ist nur sicher weil Python, wenn man importiert NUR beim ersten Import egal in welchem File den Code ausführt, weil
+# es danach das File das importiert wird zwischenspeichert. Das heißt ein File kann so keine 2 Logger haben
+logger_setup.setup_logging()
+logger = logger_setup.get_logger()
 
 class Simulation:
     def __init__(self, width=100, height=100, num_resources=4, num_organisms=2, max_ticks=100, seed=None):
@@ -14,6 +20,8 @@ class Simulation:
 
         self.env = Environment(width=width, height=height, num_resources=num_resources, num_organisms=num_organisms, seed=seed)
         self.env.NoiseGen.visualize()   #TODO Remove Later
+
+        logger.info("Simulation initialized")
 
     def set_seed(self, seed):
         """
@@ -27,11 +35,12 @@ class Simulation:
             self.seed = seed
         else:
             raise ValueError('seed ist out of usable range! Usable range is -9999 to 500!')
+        logger.debug(f"Seed set as: {seed}")
 
     def run_tick(self):
         """Führt einen einzigen Tick aus"""
         self.env.update()
-        print(f"Tick {self.current_tick} has passed!")
+        logger.debug(f"Tick {self.current_tick} runs")
 
         # Organismen anzeigen
         for org in self.env.organisms:
@@ -46,7 +55,7 @@ class Simulation:
 
     def run(self):
         """Lässt soviele Ticks laufen wie self.max_ticks groß ist"""
-        print("Simulation Runs!")
+        logger.info("Simulation is running")
         while self.current_tick < self.max_ticks:
             self.run_tick()
             input("Press <SOMETHING> to continue")

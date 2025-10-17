@@ -1,3 +1,7 @@
+from logger_setup import get_logger
+
+logger = get_logger()
+
 #TODO Food generiert in der Nähe von "Bäumen" anstatt einfach so
 
 class Food:

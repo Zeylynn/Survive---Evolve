@@ -1,5 +1,8 @@
 import math
 import random
+from logger_setup import get_logger
+
+logger = get_logger()
 
 #TODO Wasser / Food einen Sinn geben
 #TODO Attribtue zufällig initialisieren / Sinnvolle Werte geben
